@@ -7,6 +7,23 @@ namespace Matrix4Net.Utility
 {
   public static class BuildUtilities
   {
+    public static Matrix TransposeMatrix(Matrix a)
+    {
+      var (rows, columns) = a.GetMatrixShape();
+
+      var matrix = BuildZeroMatrix(columns, rows).First();
+
+      for (int i = 0; i < rows; i++)
+      {
+        for (int j = 0; j < columns; j++)
+        {
+          matrix[j, i] = a[i, j];
+        }
+      }
+
+      return matrix;
+    }
+
     public static Option<Matrix> ConcatMatrix(Matrix a, Matrix b, ConcatenateMode mode)
       => mode switch
       {

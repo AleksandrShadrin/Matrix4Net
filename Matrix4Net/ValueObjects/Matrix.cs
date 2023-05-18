@@ -206,7 +206,14 @@ namespace Matrix4Net.ValueObjects
     }
 
     private double[] ExtractColumnValues(int n)
-        => _data.Map(x => x[n]).ToArray();
+    { 
+      var copy = new double[_rowsCount];
+      for (int i = 0; i < _rowsCount; i++)
+      {
+        copy[i] = _data[i][n];
+      }
+      return copy;
+    }
 
     private bool InRange(int n, int l, int r)
         => n >= l && n <= r;
@@ -241,10 +248,10 @@ namespace Matrix4Net.ValueObjects
         => that * left;
 
     private static double[][] Multiply(Matrix that, Matrix other)
-        => that.Map
-            (
-                row => MultiplyRow(row, other)
-            ).ToArray();
+      => that.Map
+          (
+            row => MultiplyRow(row, other)
+          ).ToArray();
 
     private static double[] MultiplyRow(double[] row, Matrix other)
     {

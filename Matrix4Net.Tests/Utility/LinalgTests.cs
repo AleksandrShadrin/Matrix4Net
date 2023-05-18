@@ -36,7 +36,7 @@ namespace Matrix4Net.Tests.Utility
       var umatrix = Matrix.Build(udata).First();
 
       // ACT
-      var (l, u) = Linalg.LU(matrix).First();
+      var (l, u) = Linalg.DoolittleLU(matrix).First();
 
       // ASSERT
       umatrix.Equals(u).Should().BeTrue();
@@ -49,19 +49,19 @@ namespace Matrix4Net.Tests.Utility
       // ARRANGE
       var data = new double[][]
       {
-        new double[] { 1, 2, 3, 4},
-        new double[] { 5, 6, 7, 8},
-        new double[] { 9, 0, 1, 2},
-        new double[] { 3, 4, 5, 6},
+        new double[] { 4, 1, -2, 2},
+        new double[] { 1, 2, 0, 1},
+        new double[] { -2, 0, 3, -2},
+        new double[] { 2, 1, -2, -1},
       };
-
+      
       var matrix = Matrix.Build(data).First();
 
       // ACT
-      var det = Linalg.MatrixDeterminant(matrix).First();
+      var det = Linalg.MatrixDeterminantByPLU(matrix).First();
 
       // ASSERT
-      det.Should().Be(0);
+      det.Should().BeApproximately(-37, 6);
     }
   }
 }
